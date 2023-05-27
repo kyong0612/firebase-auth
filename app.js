@@ -6,6 +6,7 @@ import {
   signInWithRedirect,
   signOut,
 } from "firebase/auth"
+import {firebaseConfig} from './firebase-config.js'
 
 main()
 
@@ -21,9 +22,6 @@ async function main () {
 
       uid: document.querySelector('#uid'),
     }
-
-    const response = await fetch('firebase-config.json') // <1>
-    const firebaseConfig = await response.json()
     const app = initializeApp(firebaseConfig) // <2>
     const auth = getAuth(app) // <3>
 
