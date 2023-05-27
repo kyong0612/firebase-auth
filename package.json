@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "init":"cp firebase-config.sample.json firebase-config.json",
     "serve": "./node_modules/.bin/webpack serve"
   },
   "keywords": [],
