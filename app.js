@@ -31,6 +31,7 @@ async function main () {
         el.sectionUser.style.display = 'block'
         el.sectionSignout.style.display = 'block'
         el.uid.innerHTML = user.uid
+        console.log(user)
       } else {
         el.sectionSignin.style.display = 'block'
         el.sectionUser.style.display = 'none'
