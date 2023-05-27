@@ -5,7 +5,7 @@
 ```
 npm run init
 ```
-- see [here](https://support.google.com/firebase/answer/7015592?hl=en#web&zippy=%2Cin-this-article) and fix json file
+- see [here](https://support.google.com/firebase/answer/7015592?hl=en#web&zippy=%2Cin-this-article) and fix firebase-config.js file
 
 ## Run
 ```bash
