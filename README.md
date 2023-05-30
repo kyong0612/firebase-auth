@@ -1,4 +1,4 @@
-# firebase-auth-google
+# firebase-auth
 
 ## Setup
 - setup your firebase config
