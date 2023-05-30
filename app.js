@@ -6,7 +6,7 @@ import {
   GithubAuthProvider,
   signInWithRedirect,
   signOut,
-  signInWithPopup,
+  linkWithPopup,
 } from "firebase/auth";
 import { firebaseConfig } from "./firebase-config.js";
 
@@ -20,7 +20,7 @@ async function main() {
       sectionSignout: document.querySelector("#sectionSignout"),
 
       buttonGoogleSignin: document.querySelector("#buttonGoogleSignin"),
-      buttonGithubSignin: document.querySelector("#buttonGithubSignin"),
+      buttonGithubLink: document.querySelector("#buttonGithubLink"),
       buttonSignout: document.querySelector("#buttonSignout"),
 
       jwt: document.querySelector("#jwt"),
@@ -54,29 +54,22 @@ async function main() {
       }
     });
 
-    el.buttonGithubSignin.addEventListener("click", async (event) => {
+    el.buttonGithubLink.addEventListener("click", async (event) => {
       try {
         event.preventDefault();
 
         const provider = new GithubAuthProvider();
 
-        await signInWithPopup(auth, provider).then((result) => {
-          // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-          const credential = GithubAuthProvider.credentialFromResult(result);
-          // const token = credential.accessToken;
-
-          // The signed-in user info.
+        await linkWithPopup(auth.currentUser, provider).then((result) => {
+          // Accounts successfully linked.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
           const user = result.user;
-          // IdP data available using getAdditionalUserInfo(result)
-          // ...
-          console.debug("github user", user);
+          console.log("session user", user);
         });
       } catch (err) {
-        el.errorMessage.innerHTML = err.message;
+        // el.errorMessage.innerHTML = err.message;
         console.error(err);
       }
-
-
     });
 
     el.buttonSignout.addEventListener("click", async (event) => {
