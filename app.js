@@ -6,7 +6,7 @@ import {
   GithubAuthProvider,
   signInWithRedirect,
   signOut,
-  linkWithPopup,
+  linkWithRedirect,
 } from "firebase/auth";
 import { firebaseConfig } from "./firebase-config.js";
 
@@ -60,7 +60,7 @@ async function main() {
 
         const provider = new GithubAuthProvider();
 
-        await linkWithPopup(auth.currentUser, provider).then((result) => {
+        await linkWithRedirect(auth.currentUser, provider).then((result) => {
           // Accounts successfully linked.
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const user = result.user;
