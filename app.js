@@ -3,8 +3,10 @@ import {
   getAuth,
   onAuthStateChanged,
   GoogleAuthProvider,
+  GithubAuthProvider,
   signInWithRedirect,
   signOut,
+  signInWithPopup,
 } from "firebase/auth";
 import { firebaseConfig } from "./firebase-config.js";
 
@@ -17,7 +19,8 @@ async function main() {
       sectionUser: document.querySelector("#sectionUser"),
       sectionSignout: document.querySelector("#sectionSignout"),
 
-      buttonSignin: document.querySelector("#buttonSignin"),
+      buttonGoogleSignin: document.querySelector("#buttonGoogleSignin"),
+      buttonGithubSignin: document.querySelector("#buttonGithubSignin"),
       buttonSignout: document.querySelector("#buttonSignout"),
 
       jwt: document.querySelector("#jwt"),
@@ -26,13 +29,11 @@ async function main() {
     const auth = getAuth(app); // <3>
 
     onAuthStateChanged(auth, (user) => {
-      // <4>
       if (user) {
         el.sectionSignin.style.display = "none";
         el.sectionUser.style.display = "block";
         el.sectionSignout.style.display = "block";
         el.jwt.innerHTML = "Bearer " + user.accessToken;
-        console.log(user);
       } else {
         el.sectionSignin.style.display = "block";
         el.sectionUser.style.display = "none";
@@ -40,7 +41,7 @@ async function main() {
       }
     });
 
-    el.buttonSignin.addEventListener("click", async (event) => {
+    el.buttonGoogleSignin.addEventListener("click", async (event) => {
       // <5>
       try {
         event.preventDefault();
@@ -51,6 +52,31 @@ async function main() {
         el.errorMessage.innerHTML = err.message;
         console.error(err);
       }
+    });
+
+    el.buttonGithubSignin.addEventListener("click", async (event) => {
+      try {
+        event.preventDefault();
+
+        const provider = new GithubAuthProvider();
+
+        await signInWithPopup(auth, provider).then((result) => {
+          // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+          const credential = GithubAuthProvider.credentialFromResult(result);
+          // const token = credential.accessToken;
+
+          // The signed-in user info.
+          const user = result.user;
+          // IdP data available using getAdditionalUserInfo(result)
+          // ...
+          console.debug("github user", user);
+        });
+      } catch (err) {
+        el.errorMessage.innerHTML = err.message;
+        console.error(err);
+      }
+
+
     });
 
     el.buttonSignout.addEventListener("click", async (event) => {
